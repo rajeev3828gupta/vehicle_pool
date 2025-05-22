@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Connections Dashboard</title>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet" />
+  <style>
+    body {
+      margin: 0;
+      padding: 20px;
+      background-color: #121212;
+      color: #ffffff;
+      font-family: 'Inter', sans-serif;
+    }
+
+    a.back-button {
+      display: block;
+      width: fit-content;
+      margin: 20px;
+      padding: 10px 20px;
+      background-color: #2563eb;
+      border-radius: 8px;
+      color: white;
+      text-decoration: none;
+      font-weight: 600;
+      transition: background-color 0.2s ease;
+    }
+
+    a.back-button:hover {
+      background-color: #1d4ed8;
+    }
+
+    h1 {
+      text-align: center;
+      font-size: 3rem;
+      margin-bottom: 2rem;
+    }
+
+    .dashboard {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+      gap: 2.5rem;
+      margin-top: 2.5rem;
+    }
+
+    .card {
+      background-color: #1a1a1a;
+      padding: 30px;
+      border-radius: 14px;
+      box-shadow: 0 0 20px rgba(0, 0, 0, 0.6);
+      animation: fadeInUp 1s ease forwards;
+    }
+
+    .activity-icon {
+      width: 48px;
+      height: 48px;
+      margin-bottom: 12px;
+    }
+
+    h3 {
+      font-size: 1.4rem;
+      margin: 15px 0;
+    }
+
+    canvas {
+      width: 100% !important;
+      height: 280px !important;
+    }
+
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+  </style>
+</head>
+<body>
+  <a class="back-button" href="/register/login/dashboard.html">← Back to Dashboard</a>
+  <h1>My Connections & Activity</h1>
+
+  <div class="dashboard">
+    <div class="card">
+      <img
+        class="activity-icon"
+        src="https://img.icons8.com/external-flat-icons-inmotus-design/67/000000/external-ride-sharing-online-transport-flat-icons-inmotus-design.png"
+        alt="Ride Icon"
+      />
+      <h3>Rides Offered vs Taken</h3>
+      <canvas id="ridesChart"></canvas>
+    </div>
+
+    <div class="card">
+      <img class="activity-icon" src="https://img.icons8.com/color/96/000000/money.png" alt="Money Icon" />
+      <h3>Money Transactions</h3>
+      <canvas id="moneyChart"></canvas>
+    </div>
+
+    <div class="card">
+      <img class="activity-icon" src="https://img.icons8.com/emoji/96/000000/star-emoji.png" alt="Rating Icon" />
+      <h3>Rating Received Over Time</h3>
+      <canvas id="ratingChart"></canvas>
+    </div>
+
+    <div class="card">
+      <img
+        class="activity-icon"
+        src="https://img.icons8.com/ios-filled/100/00e676/group-foreground-selected.png"
+        alt="Friends Icon"
+      />
+      <h3>New Connections Made</h3>
+      <canvas id="connectionsChart"></canvas>
+    </div>
+
+    <div class="card">
+      <img
+        class="activity-icon"
+        src="https://img.icons8.com/ios-filled/50/ffbb33/pie-chart.png"
+        alt="Pie Chart Icon"
+      />
+      <h3>Ride Types Distribution</h3>
+      <canvas id="rideTypesPieChart"></canvas>
+    </div>
+
+   
+    <div class="card">
+      <img
+        class="activity-icon"
+        src="https://img.icons8.com/ios-filled/50/60a5fa/chat-message.png"
+        alt="Messages Icon"
+      />
+      <h3>Messages Exchanged Over Time</h3>
+      <canvas id="messagesChart"></canvas>
+    </div>
+  </div>
+
+  <script>
+    const chartOptions = {
+      responsive: true,
+      maintainAspectRatio: false,
+      scales: {
+        x: {
+          ticks: { color: '#ccc', font: { size: 14 } }
+        },
+        y: {
+          ticks: { color: '#ccc', font: { size: 14 } }
+        }
+      },
+      plugins: {
+        legend: { labels: { color: '#ccc', font: { size: 14 } } }
+      }
+    };
+
+    new Chart(document.getElementById('ridesChart'), {
+      type: 'bar',
+      data: {
+        labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May'],
+        datasets: [
+          {
+            label: 'Rides Offered',
+            data: [5, 8, 4, 7, 6],
+            backgroundColor: '#4ade80'
+          },
+          {
+            label: 'Rides Taken',
+            data: [3, 6, 5, 8, 4],
+            backgroundColor: '#60a5fa'
+          }
+        ]
+      },
+      options: chartOptions
+    });
+
+    new Chart(document.getElementById('moneyChart'), {
+      type: 'line',
+      data: {
+        labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May'],
+        datasets: [
+          {
+            label: '₹ Transferred',
+            data: [300, 450, 500, 650, 600],
+            borderColor: '#facc15',
+            backgroundColor: 'rgba(250, 204, 21, 0.3)',
+            fill: true,
+            tension: 0.4
+          }
+        ]
+      },
+      options: chartOptions
+    });
+
+    new Chart(document.getElementById('ratingChart'), {
+      type: 'line',
+      data: {
+        labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May'],
+        datasets: [
+          {
+            label: 'Average Rating',
+            data: [4.2, 4.5, 4.7, 4.6, 4.8],
+            borderColor: '#fb7185',
+            backgroundColor: 'rgba(251, 113, 133, 0.3)',
+            fill: true,
+            tension: 0.4
+          }
+        ]
+      },
+      options: chartOptions
+    });
+
+    new Chart(document.getElementById('connectionsChart'), {
+      type: 'bar',
+      data: {
+        labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May'],
+        datasets: [
+          {
+            label: 'New Friends',
+            data: [2, 3, 5, 4, 6],
+            backgroundColor: '#38bdf8'
+          }
+        ]
+      },
+      options: chartOptions
+    });
+
+    new Chart(document.getElementById('rideTypesPieChart'), {
+      type: 'pie',
+      data: {
+        labels: ['Carpool', 'Bike', 'Walk'],
+        datasets: [
+          {
+            label: 'Ride Types',
+            data: [55, 30, 15],
+            backgroundColor: ['#4ade80', '#60a5fa', '#f87171'],
+            borderColor: '#121212',
+            borderWidth: 2
+          }
+        ]
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        plugins: {
+          legend: {
+            position: 'bottom',
+            labels: { color: '#ccc', font: { size: 14 } }
+          }
+        }
+      }
+    });
+
+    new Chart(document.getElementById('messagesChart'), {
+      type: 'line',
+      data: {
+        labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May'],
+        datasets: [
+          {
+            label: 'Messages Exchanged',
+            data: [120, 200, 180, 250, 300],
+            borderColor: '#60a5fa',
+            backgroundColor: 'rgba(96, 165, 250, 0.3)',
+            fill: true,
+            tension: 0.4
+          }
+        ]
+      },
+      options: chartOptions
+    });
+  </script>
+</body>
+</html>

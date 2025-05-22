@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Chat with Riders - StudentLink</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: linear-gradient(135deg, #0f172a, #1e293b);
+      margin: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      color: #f3f4f6;
+      animation: fadeIn 1s ease-in;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .chat-container {
+      background: #1e293b;
+      width: 900px;
+      max-width: 95vw;
+      height: 600px;
+      border-radius: 15px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.4);
+      display: flex;
+      overflow: hidden;
+      animation: fadeIn 1s ease-in;
+    }
+
+    .chat-sidebar {
+      width: 280px;
+      background: #111827;
+      color: #f3f4f6;
+      padding: 20px;
+      box-sizing: border-box;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      animation: slideIn 0.8s ease-in;
+    }
+
+    @keyframes slideIn {
+      from { transform: translateX(-50px); opacity: 0; }
+      to { transform: translateX(0); opacity: 1; }
+    }
+
+    .chat-sidebar h2 {
+      margin-top: 0;
+      margin-bottom: 1rem;
+      font-weight: 700;
+      font-size: 1.6rem;
+    }
+    .ride-info {
+      font-size: 1rem;
+      line-height: 1.4;
+    }
+    .ride-info strong {
+      display: block;
+      margin-top: 10px;
+    }
+    .sidebar-footer {
+      font-size: 0.9rem;
+      opacity: 0.8;
+    }
+
+    .chat-main {
+      flex-grow: 1;
+      display: flex;
+      flex-direction: column;
+      background: #0f172a;
+      padding: 20px;
+      box-sizing: border-box;
+    }
+
+    header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 1rem;
+    }
+
+    #backBtn {
+      background: #3b82f6;
+      border: none;
+      color: white;
+      padding: 8px 15px;
+      border-radius: 8px;
+      cursor: pointer;
+      font-weight: bold;
+      box-shadow: 0 4px 10px rgba(59,130,246,0.5);
+      transition: background-color 0.3s ease;
+    }
+    #backBtn:hover {
+      background-color: #2563eb;
+    }
+    header h1 {
+      font-size: 1.5rem;
+      color: #f3f4f6;
+      margin: 0;
+    }
+
+    #chatBox {
+      flex-grow: 1;
+      overflow-y: auto;
+      background: #1f2937;
+      border-radius: 15px;
+      padding: 15px;
+      box-shadow: inset 0 0 5px rgba(0,0,0,0.3);
+      margin-bottom: 15px;
+    }
+
+    .message {
+      display: flex;
+      margin-bottom: 15px;
+      max-width: 70%;
+      word-wrap: break-word;
+      animation: fadeIn 0.3s ease-in;
+    }
+    .message.sent {
+      justify-content: flex-end;
+      margin-left: auto;
+    }
+    .message.received {
+      justify-content: flex-start;
+      margin-right: auto;
+    }
+
+    .message .avatar {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      overflow: hidden;
+      flex-shrink: 0;
+      margin-right: 10px;
+    }
+    .message.sent .avatar {
+      margin-left: 10px;
+      margin-right: 0;
+    }
+    .message .text {
+      padding: 10px 15px;
+      border-radius: 20px;
+      font-size: 0.95rem;
+      line-height: 1.3;
+      box-shadow: 0 1px 4px rgba(0,0,0,0.3);
+    }
+    .message.sent .text {
+      background-color: #3b82f6;
+      color: white;
+      border-bottom-right-radius: 4px;
+    }
+    .message.received .text {
+      background-color: #374151;
+      color: #f3f4f6;
+      border-bottom-left-radius: 4px;
+    }
+
+    form {
+      display: flex;
+      gap: 10px;
+    }
+
+    input[type="text"] {
+      flex-grow: 1;
+      padding: 12px 15px;
+      font-size: 1rem;
+      border: 1px solid #4b5563;
+      border-radius: 25px;
+      outline: none;
+      background-color: #111827;
+      color: #f3f4f6;
+      transition: border-color 0.3s ease;
+    }
+    input[type="text"]:focus {
+      border-color: #3b82f6;
+      box-shadow: 0 0 5px #3b82f6;
+    }
+
+    button {
+      background-color: #3b82f6;
+      border: none;
+      color: white;
+      padding: 0 20px;
+      border-radius: 25px;
+      font-weight: bold;
+      cursor: pointer;
+      box-shadow: 0 4px 10px rgba(59,130,246,0.5);
+      transition: background-color 0.3s ease;
+    }
+    button:hover {
+      background-color: #2563eb;
+    }
+
+    #chatBox::-webkit-scrollbar {
+      width: 8px;
+    }
+    #chatBox::-webkit-scrollbar-track {
+      background: #1f2937;
+    }
+    #chatBox::-webkit-scrollbar-thumb {
+      background-color: #3b82f6;
+      border-radius: 4px;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="chat-container">
+    <aside class="chat-sidebar">
+      <h2>Your Ride Match</h2>
+      <div class="ride-info">
+        <strong>From:</strong> IIT  Campus<br />
+        <strong>To:</strong> Krishna Residence<br />
+        <strong>Time:</strong> 8:00 AM - 8:30 AM<br />
+        <strong>Vehicle:</strong> Blue Sedan<br />
+        <strong>Seats Available:</strong> 2<br />
+      </div>
+      <div class="sidebar-footer">
+        Chat here to coordinate pickup spots, share contact info, and split costs.
+      </div>
+    </aside>
+
+    <main class="chat-main">
+      <header>
+        <button id="backBtn" onclick="goBack()">Back</button>
+        <h1>Chat with Riders</h1>
+      </header>
+
+      <div id="chatBox">
+        
+      </div>
+
+      <form id="chatForm">
+        <input type="text" id="messageInput" placeholder="Type your message..." autocomplete="off" required />
+        <button type="submit">Send</button>
+      </form>
+    </main>
+  </div>
+
+  <script>
+    window.addEventListener('DOMContentLoaded', () => {
+  addMessage("Hey! Are we still on for the ride tomorrow?", 'received');
+  addMessage("Yes, definitely. 8 AM right?", 'sent');
+  addMessage("Yep, I’ll be at the front gate by then.", 'received');
+  addMessage("Cool, I’ll bring coffee!", 'sent');
+});
+
+    const chatBox = document.getElementById('chatBox');
+    const chatForm = document.getElementById('chatForm');
+    const messageInput = document.getElementById('messageInput');
+
+    const userAvatar = 'https://i.pravatar.cc/40?img=12';
+    const riderAvatar = 'https://i.pravatar.cc/40?img=47';
+
+    function addMessage(text, type) {
+      const msgDiv = document.createElement('div');
+      msgDiv.classList.add('message', type);
+
+      const avatarDiv = document.createElement('div');
+      avatarDiv.classList.add('avatar');
+
+      const img = document.createElement('img');
+      img.src = (type === 'sent') ? userAvatar : riderAvatar;
+      img.alt = type === 'sent' ? 'You' : 'Rider';
+
+      avatarDiv.appendChild(img);
+
+      const textDiv = document.createElement('div');
+      textDiv.classList.add('text');
+      textDiv.textContent = text;
+
+      if(type === 'sent') {
+        msgDiv.appendChild(textDiv);
+        msgDiv.appendChild(avatarDiv);
+      } else {
+        msgDiv.appendChild(avatarDiv);
+        msgDiv.appendChild(textDiv);
+      }
+
+      chatBox.appendChild(msgDiv);
+      chatBox.scrollTop = chatBox.scrollHeight;
+    }
+
+    chatForm.addEventListener('submit', function(event) {
+      event.preventDefault();
+      const msg = messageInput.value.trim();
+      if (msg === '') return;
+
+      addMessage(msg, 'sent');
+      messageInput.value = '';
+
+      setTimeout(() => {
+        const replies = [
+          "Sounds good! I'll be there.",
+          "Can we meet at the main gate?",
+          "What’s your phone number to coordinate?",
+          "Thanks! Looking forward to it.",
+          "I’ll bring snacks for the ride!",
+        ];
+        const reply = replies[Math.floor(Math.random() * replies.length)];
+        addMessage(reply, 'received');
+      }, 1500);
+    });
+
+    function goBack() {
+      window.history.back();
+    }
+  </script>
+</body>
+</html>

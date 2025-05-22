@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Events & Meetups - StudentLink</title>
+  <style>
+   
+    body {
+      font-family: Arial, sans-serif;
+      max-width: 700px;
+      margin: 2rem auto;
+      padding: 0 1rem;
+      background-color: #0f172a; 
+      color: #e0e7ff; 
+    }
+    h1 {
+      text-align: center;
+      color: #60a5fa;
+      margin-bottom: 2rem;
+      animation: fadeInDown 0.8s ease forwards;
+      opacity: 0;
+    }
+    nav {
+      margin-bottom: 1.5rem;
+      animation: fadeInDown 0.8s ease forwards;
+      animation-delay: 0.2s;
+      opacity: 0;
+    }
+    nav button {
+      background-color: #2563eb;
+      color: white;
+      border: none;
+      padding: 0.5rem 1rem;
+      border-radius: 0.5rem;
+      cursor: pointer;
+      font-weight: bold;
+      box-shadow: 0 4px 8px rgba(37, 99, 235, 0.6);
+      transition: background-color 0.3s ease;
+    }
+    nav button:hover {
+      background-color: #1d4ed8;
+    }
+    .event {
+      background: #1e293b; 
+      padding: 1rem;
+      margin-bottom: 1.5rem;
+      border-radius: 0.75rem;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.6);
+      display: flex;
+      gap: 1rem;
+      align-items: center;
+      opacity: 0;
+      transform: translateY(20px);
+      animation: fadeInUp 0.8s ease forwards;
+    }
+    
+    .event:nth-child(3) { animation-delay: 0.4s; }
+    .event:nth-child(4) { animation-delay: 0.6s; }
+    .event:nth-child(5) { animation-delay: 0.8s; }
+    .event:nth-child(6) { animation-delay: 1s; }
+
+    .event img {
+      width: 120px;
+      height: 80px;
+      border-radius: 0.5rem;
+      object-fit: cover;
+      flex-shrink: 0;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.7);
+    }
+    .event-content {
+      flex-grow: 1;
+    }
+    .event h2 {
+      margin: 0 0 0.25rem 0;
+      color: #60a5fa;
+    }
+    .event p {
+      margin: 0.2rem 0;
+      color: #cbd5e1; 
+    }
+    .event .date {
+      font-weight: bold;
+      color: #94a3b8;
+    }
+
+   
+    @keyframes fadeInUp {
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+    @keyframes fadeInDown {
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+  </style>
+</head>
+<body>
+  <nav>
+    <button onclick="window.history.back()">← Back</button>
+  </nav>
+
+  <h1>Upcoming Events & Meetups</h1>
+
+  <div class="event">
+    <img src="https://images.unsplash.com/photo-1528605248644-14dd04022da1?auto=format&fit=crop&w=400&q=80" alt="Welcome Party" />
+    <div class="event-content">
+      <h2>Freshers' Welcome Party</h2>
+      <p class="date">Date: June 10, 2025 | Time: 6:00 PM</p>
+      <p>Join us for an evening of fun, music, and games to welcome the new batch of students.</p>
+    </div>
+  </div>
+
+  <div class="event">
+    <img src="https://images.unsplash.com/photo-1504384308090-c894fdcc538d?auto=format&fit=crop&w=400&q=80" alt="Tech Talk" />
+    <div class="event-content">
+      <h2>Tech Talk: AI in Everyday Life</h2>
+      <p class="date">Date: June 15, 2025 | Time: 4:00 PM</p>
+      <p>Expert speakers from the industry discuss practical applications of Artificial Intelligence.</p>
+    </div>
+  </div>
+
+  <div class="event">
+    <img src="https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=400&q=80" alt="Hiking Trip" />
+    <div class="event-content">
+      <h2>Weekend Hiking Trip</h2>
+      <p class="date">Date: June 20, 2025 | Time: 7:00 AM</p>
+      <p>Explore nature and build connections with fellow students on this fun hiking excursion.</p>
+    </div>
+  </div>
+
+  <div class="event">
+    <img src="https://images.unsplash.com/photo-1551434678-e076c223a692?auto=format&fit=crop&w=400&q=80" alt="Study Session" />
+    <div class="event-content">
+      <h2>Group Study Session - Calculus</h2>
+      <p class="date">Date: June 22, 2025 | Time: 3:00 PM</p>
+      <p>Collaborate with classmates to prepare for the upcoming Calculus exam.</p>
+    </div>
+  </div>
+</body>
+</html>

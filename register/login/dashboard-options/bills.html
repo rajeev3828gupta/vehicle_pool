@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Bill Splitting - StudentLink</title>
+  <style>
+    
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background: linear-gradient(135deg, #0f172a, #1e293b);
+      margin: 0;
+      padding: 30px 20px;
+      display: flex;
+      justify-content: center;
+      min-height: 100vh;
+      color: #e2e8f0;
+    }
+
+    .container {
+      background: #1e293b;
+      border-radius: 15px;
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.6);
+      width: 600px;
+      max-width: 95vw;
+      padding: 30px 40px;
+      box-sizing: border-box;
+      animation: fadeIn 0.8s ease-in-out;
+    }
+
+    h1 {
+      color: #60a5fa;
+      margin-bottom: 20px;
+      text-align: center;
+      animation: slideDown 0.6s ease-in-out;
+    }
+
+    .feature-image {
+      display: block;
+      margin: 0 auto 25px;
+      max-width: 200px;
+      border-radius: 15px;
+      box-shadow: 0 8px 20px rgba(96, 165, 250, 0.3);
+      animation: scaleFade 0.8s ease-in-out;
+    }
+
+    .description {
+      text-align: center;
+      font-size: 1.1rem;
+      margin-bottom: 30px;
+      color: #cbd5e1;
+    }
+
+    form {
+      margin-bottom: 30px;
+    }
+
+    label {
+      font-weight: bold;
+      margin-bottom: 6px;
+      display: block;
+      color: #93c5fd;
+    }
+
+    input[type="text"], input[type="number"] {
+      width: 100%;
+      padding: 10px 14px;
+      margin-bottom: 15px;
+      border-radius: 8px;
+      border: 1px solid #334155;
+      background: #0f172a;
+      color: #e2e8f0;
+      font-size: 1rem;
+      box-sizing: border-box;
+      transition: border 0.3s ease;
+    }
+
+    input[type="text"]:focus, input[type="number"]:focus {
+      border-color: #60a5fa;
+      outline: none;
+    }
+
+    button {
+      background-color: #3b82f6;
+      color: white;
+      border: none;
+      padding: 12px 20px;
+      font-weight: bold;
+      border-radius: 25px;
+      cursor: pointer;
+      width: 100%;
+      font-size: 1.1rem;
+      box-shadow: 0 5px 15px rgba(59, 130, 246, 0.4);
+      transition: background-color 0.3s ease, transform 0.2s ease;
+    }
+
+    button:hover {
+      background-color: #2563eb;
+      transform: scale(1.02);
+    }
+
+    .participants-list {
+      margin-bottom: 25px;
+    }
+
+    .participant {
+      display: flex;
+      align-items: center;
+      margin-bottom: 12px;
+      gap: 12px;
+      background: #0f172a;
+      padding: 10px 14px;
+      border-radius: 10px;
+      animation: fadeInUp 0.5s ease-in-out;
+    }
+
+    .avatar {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      overflow: hidden;
+      flex-shrink: 0;
+      box-shadow: 0 3px 10px rgba(96, 165, 250, 0.3);
+    }
+
+    .avatar img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .participant-name {
+      font-weight: 600;
+      flex-grow: 1;
+      color: #f8fafc;
+    }
+
+    .amount-owed {
+      font-weight: bold;
+      color: #60a5fa;
+      min-width: 80px;
+      text-align: right;
+    }
+
+    .summary {
+      border-top: 2px solid #334155;
+      padding-top: 20px;
+      font-size: 1.1rem;
+      color: #e2e8f0;
+    }
+
+    .back-button {
+      margin-top: 10px;
+      background-color: #64748b;
+      font-weight: normal;
+    }
+
+    .back-button:hover {
+      background-color: #475569;
+    }
+
+    
+    @keyframes fadeIn {
+      from {opacity: 0; transform: scale(0.95);}
+      to {opacity: 1; transform: scale(1);}
+    }
+
+    @keyframes fadeInUp {
+      from {opacity: 0; transform: translateY(15px);}
+      to {opacity: 1; transform: translateY(0);}
+    }
+
+    @keyframes slideDown {
+      from {opacity: 0; transform: translateY(-15px);}
+      to {opacity: 1; transform: translateY(0);}
+    }
+
+    @keyframes scaleFade {
+      from {opacity: 0; transform: scale(0.8);}
+      to {opacity: 1; transform: scale(1);}
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <h1>Bill Splitting</h1>
+
+    <img class="feature-image" src="https://www.louisianafcu.org/hs-fs/hubfs/Blog_The%20polite%20persons%20guide%20to%20splitting%20the%20bill%20(2).png?width=640&name=Blog_The%20polite%20persons%20guide%20to%20splitting%20the%20bill%20(2).png" alt="Group of students managing expenses" />
+
+    <div class="description">
+      Easily manage and split travel or shared expenses with your peers. Add participants, enter costs, and see what everyone owes!
+    </div>
+
+    <form id="expenseForm">
+      <label for="participantName">Participant Name</label>
+      <input type="text" id="participantName" placeholder="Enter participant's name" required />
+
+      <label for="participantAmount">Amount Paid (₹)</label>
+      <input type="number" id="participantAmount" min="0" step="0.01" placeholder="Enter amount paid" required />
+
+      <button type="submit">Add Participant</button>
+    </form>
+
+    <div class="participants-list" id="participantsList">
+      
+    </div>
+
+    <div class="summary" id="summary">
+      No participants added yet.
+    </div>
+
+    <button class="back-button" onclick="goBack()">Back to Dashboard</button>
+  </div>
+
+  <script>
+    const expenseForm = document.getElementById('expenseForm');
+    const participantsList = document.getElementById('participantsList');
+    const summary = document.getElementById('summary');
+
+    const avatars = [
+      'https://i.pravatar.cc/40?img=5',
+      'https://i.pravatar.cc/40?img=15',
+      'https://i.pravatar.cc/40?img=25',
+      'https://i.pravatar.cc/40?img=35',
+      'https://i.pravatar.cc/40?img=45',
+    ];
+
+    let participants = [];
+
+    function updateDisplay() {
+      participantsList.innerHTML = '';
+
+      if (participants.length === 0) {
+        summary.textContent = 'No participants added yet.';
+        return;
+      }
+
+      const totalPaid = participants.reduce((sum, p) => sum + p.amount, 0);
+      const perPerson = totalPaid / participants.length;
+
+      participants.forEach((p, i) => {
+        const participantDiv = document.createElement('div');
+        participantDiv.className = 'participant';
+
+        const avatarDiv = document.createElement('div');
+        avatarDiv.className = 'avatar';
+        const img = document.createElement('img');
+        img.src = avatars[i % avatars.length];
+        img.alt = p.name;
+        avatarDiv.appendChild(img);
+
+        const nameDiv = document.createElement('div');
+        nameDiv.className = 'participant-name';
+        nameDiv.textContent = p.name;
+
+        const owedDiv = document.createElement('div');
+        owedDiv.className = 'amount-owed';
+        const owed = perPerson - p.amount;
+        if (owed > 0) {
+          owedDiv.textContent = `Owes ₹${owed.toFixed(2)}`;
+          owedDiv.style.color = '#ef4444';
+        } else if (owed < 0) {
+          owedDiv.textContent = `Gets ₹${Math.abs(owed).toFixed(2)}`;
+          owedDiv.style.color = '#22c55e';
+        } else {
+          owedDiv.textContent = 'Settled';
+          owedDiv.style.color = '#60a5fa';
+        }
+
+        participantDiv.appendChild(avatarDiv);
+        participantDiv.appendChild(nameDiv);
+        participantDiv.appendChild(owedDiv);
+
+        participantsList.appendChild(participantDiv);
+      });
+
+      summary.innerHTML = `<strong>Total Paid:</strong> ₹${totalPaid.toFixed(2)} <br />
+                           <strong>Each Person Owes:</strong> ₹${perPerson.toFixed(2)}`;
+    }
+
+    expenseForm.addEventListener('submit', (e) => {
+      e.preventDefault();
+      const name = document.getElementById('participantName').value.trim();
+      const amount = parseFloat(document.getElementById('participantAmount').value);
+
+      if (name === '' || isNaN(amount) || amount < 0) {
+        alert('Please enter a valid name and a non-negative amount.');
+        return;
+      }
+
+      participants.push({ name, amount });
+      updateDisplay();
+
+      expenseForm.reset();
+      document.getElementById('participantName').focus();
+    });
+
+    function goBack() {
+      window.history.back();
+    }
+  </script>
+
+</body>
+</html>

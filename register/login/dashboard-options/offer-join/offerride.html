@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Offer a Ride - StudentLink</title>
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', sans-serif;
+      background: #000000;
+      color: #f1f5f9;
+      min-height: 100vh;
+      padding: 30px;
+      animation: fadeIn 1s ease-in-out;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .container {
+      max-width: 700px;
+      margin: auto;
+      background: #111111;
+      padding: 30px;
+      border-radius: 16px;
+      box-shadow: 0 0 35px rgb(210, 200, 200); /* white glow */
+      position: relative;
+      animation: popIn 0.7s ease;
+    }
+
+    @keyframes popIn {
+      from { opacity: 0; transform: scale(0.95); }
+      to { opacity: 1; transform: scale(1); }
+    }
+
+    .back-button {
+      position: absolute;
+      top: 20px;
+      left: 60px;
+      background-color: #1f2937;
+      border: none;
+      padding: 15px 5px;
+      border-radius: 8px;
+      cursor: pointer;
+      font-weight: bold;
+      color: #e5e7eb;
+      width: 15%;
+      transition: background-color 0.3s ease;
+    }
+
+    .back-button:hover {
+      background-color: #374151;
+    }
+
+    h1 {
+      color: #38bdf8;
+      text-align: center;
+      margin-bottom: 20px;
+    }
+
+    img {
+      width: 100%;
+      height: 220px;
+      object-fit: cover;
+      border-radius: 12px;
+      margin-bottom: 20px;
+      box-shadow: 0 0 20px rgba(255, 255, 255, 0.2); /* white glow */
+    }
+
+    label {
+      font-weight: bold;
+      display: block;
+      margin-top: 10px;
+      color: #cbd5e1;
+    }
+
+    input, select {
+      width: 100%;
+      padding: 10px;
+      margin-top: 5px;
+      border: 1px solid #333;
+      border-radius: 8px;
+      background-color: #1f1f1f;
+      color: #f1f5f9;
+      transition: border-color 0.3s;
+    }
+
+    input:focus, select:focus {
+      border-color: #38bdf8;
+      outline: none;
+    }
+
+    button[type="submit"] {
+      margin-top: 20px;
+      width: 100%;
+      padding: 12px;
+      background-color: #2563eb;
+      color: white;
+      font-weight: bold;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: background-color 0.3s ease, transform 0.2s ease, box-shadow 0.3s ease;
+      box-shadow: 0 0 10px rgba(255, 255, 255, 0.2);
+    }
+
+    button[type="submit"]:hover {
+      background-color: #1e40af;
+      transform: scale(1.02);
+      box-shadow: 0 0 15px rgba(255, 255, 255, 0.3);
+    }
+  </style>
+</head>
+<body>
+  <button class="back-button" onclick="history.back()">← Back</button>
+  <div class="container">
+    <h1>Offer a Ride</h1>
+    <img src="https://th.bing.com/th/id/OIP.a_gtofgVou4T9NG6ucW8GQHaEK?w=333&h=180&c=7&r=0&o=7&cb=iwp2&dpr=1.3&pid=1.7&rm=3" alt="Offer Ride" />
+    <form>
+      <label for="from">From</label>
+      <input type="text" id="from" placeholder="Start Location" required />
+
+      <label for="to">To</label>
+      <input type="text" id="to" placeholder="Destination" required />
+
+      <label for="date">Date</label>
+      <input type="date" id="date" required />
+
+      <label for="time">Time</label>
+      <input type="time" id="time" required />
+
+      <label for="seats">Available Seats</label>
+      <select id="seats" required>
+        <option value="">Select Seats</option>
+        <option value="1">1</option>
+        <option value="2">2</option>
+        <option value="3">3</option>
+        <option value="4">4</option>
+      </select>
+
+      <button type="submit">Submit Ride Offer</button>
+    </form>
+  </div>
+</body>
+</html>

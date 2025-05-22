@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Browse Nearby Trips</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Inter', sans-serif;
+      background-color: #121212;
+      color: white;
+      padding: 20px;
+    }
+    h1 {
+      text-align: center;
+      font-size: 2.5rem;
+      margin-bottom: 1rem;
+    }
+    .back-button {
+      display: block;
+      margin: 40px ;
+      width: fit-content;
+      background-color: #2563eb;
+      padding: 10px 20px;
+      border-radius: 8px;
+      text-decoration: none;
+      color: white;
+      font-weight: 600;
+      transition: background-color 0.2s ease;
+    }
+    .back-button:hover {
+      background-color: #1d4ed8;
+    }
+    .search-box {
+      display: flex;
+      justify-content: center;
+      margin-bottom: 2rem;
+    }
+    .search-box input {
+      width: 100%;
+      max-width: 500px;
+      padding: 10px 15px;
+      border-radius: 8px;
+      border: none;
+      font-size: 1rem;
+      outline: none;
+    }
+    .grid {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 1.5rem;
+    }
+    .card {
+      background-color: #1e1e1e;
+      width: 300px;
+      padding: 20px;
+      border-radius: 12px;
+      border: 1px solid #333;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+      transition: transform 0.3s ease;
+      animation: fadeInUp 0.6s ease forwards;
+    }
+    .card:hover {
+      transform: scale(1.05);
+    }
+    .card img {
+      width: 100%;
+      height: 180px;
+      object-fit: cover;
+      border-radius: 8px;
+      margin-bottom: 15px;
+    }
+    .card h2 {
+      font-size: 1.5rem;
+      margin-bottom: 0.5rem;
+    }
+    .card p {
+      color: #ccc;
+    }
+    .map-button {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-top: 1rem;
+      padding: 10px 15px;
+      background-color: #2563eb;
+      border: none;
+      border-radius: 8px;
+      color: white;
+      cursor: pointer;
+      transition: background-color 0.2s ease;
+      text-decoration: none;
+    }
+    .map-button:hover {
+      background-color: #1d4ed8;
+    }
+    .map-button svg {
+      margin-right: 8px;
+    }
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+  </style>
+</head>
+<body>
+  <a class="back-button" href="/register/login/dashboard.html">← Back to Dashboard</a>
+  <h1>Nearby Trips</h1>
+  <div class="search-box">
+    <input type="text" id="searchInput" placeholder="Search by destination or description...">
+  </div>
+  <div class="grid" id="tripContainer"></div>
+
+  <script>
+    const trips = [
+      {
+        destination: "India Gate, New Delhi",
+        coordinates: "28.6129,77.2295",
+        date: "2025-05-25",
+        description: "Evening heritage walk.",
+        image: "https://th.bing.com/th/id/R.20bbfeab0fb93f0b31445b8f74505344?rik=TZZnW8gv3tRZvg&riu=http%3a%2f%2fwww.abidcars.com%2fimages%2fmap_fes.jpg&ehk=ghQ5f4VgoYZtMjoMDtDfc2nwV%2f%2fHeMiP%2fZLmaX%2fnadQ%3d&risl=&pid=ImgRaw&r=0"
+      },
+      {
+        destination: "Marine Drive, Mumbai",
+        coordinates: "18.9430,72.8238",
+        date: "2025-05-26",
+        description: "Chill by the sea with music and snacks.",
+        image: "https://th.bing.com/th/id/R.184d332455b616bdc556bfc9afea7440?rik=rGNEIiTDVa3hlg&riu=http%3a%2f%2flogistic-partner.ro%2fimages%2fLogistic-Partner%2fHarta.JPG&ehk=4KNrHZz%2bVj3iF2jAGDnpubIip%2fusp2y9Xz0b%2fGW%2fP4g%3d&risl=&pid=ImgRaw&r=0"
+      },
+      {
+        destination: "Cubbon Park, Bangalore",
+        coordinates: "12.9763,77.5929",
+        date: "2025-05-28",
+        description: "Nature walk and photography meetup.",
+        image: "https://th.bing.com/th/id/R.20bbfeab0fb93f0b31445b8f74505344?rik=TZZnW8gv3tRZvg&riu=http%3a%2f%2fwww.abidcars.com%2fimages%2fmap_fes.jpg&ehk=ghQ5f4VgoYZtMjoMDtDfc2nwV%2f%2fHeMiP%2fZLmaX%2fnadQ%3d&risl=&pid=ImgRaw&r=0"
+      },
+      {
+        destination: "Charminar, Hyderabad",
+        coordinates: "17.3616,78.4747",
+        date: "2025-06-01",
+        description: "Explore history and street food in Old City.",
+        image: "https://th.bing.com/th/id/OIP.Wb90Pc1PCNJDD1hMaddsuQHaD4?cb=iwp2&w=1200&h=630&rs=1&pid=ImgDetMain"
+      },
+      {
+        destination: "Victoria Memorial, Kolkata",
+        coordinates: "22.5448,88.3426",
+        date: "2025-06-05",
+        description: "Cultural stroll and museum visit.",
+        image: "https://th.bing.com/th/id/OIP.ttaocHRzVutwsen-eBNZEgHaEF?cb=iwp2&w=1280&h=706&rs=1&pid=ImgDetMain"
+      },
+      {
+        destination: "City Palace, Udaipur",
+        coordinates: "24.5760,73.6833",
+        date: "2025-06-08",
+        description: "Palatial visit and lake view hangout.",
+        image: "https://preview.redd.it/meanwhile-in-london-the-russian-embassy-now-has-to-change-v0-f27sce2ipxla1.jpg?width=640&crop=smart&auto=webp&s=28742dbf42d62946662c52349cd2ff2479e77fa0"
+      }
+    ];
+
+    const container = document.getElementById('tripContainer');
+    const searchInput = document.getElementById('searchInput');
+
+    function renderTrips(filter = '') {
+      container.innerHTML = '';
+      const filteredTrips = trips.filter(trip => 
+        trip.destination.toLowerCase().includes(filter.toLowerCase()) ||
+        trip.description.toLowerCase().includes(filter.toLowerCase())
+      );
+
+      filteredTrips.forEach((trip, index) => {
+        const card = document.createElement('div');
+        card.className = 'card';
+        card.style.animationDelay = `${index * 0.2}s`;
+        card.innerHTML = `
+          <img src="${trip.image}" alt="${trip.destination}">
+          <h2>${trip.destination}</h2>
+          <p><strong>Date:</strong> ${trip.date}</p>
+          <p>${trip.description}</p>
+          <a class="map-button" href="https://www.google.com/maps/search/?api=1&query=${trip.coordinates}" target="_blank">
+            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-map-pin" width="20" height="20" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+              <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+              <circle cx="12" cy="11" r="3" />
+              <path d="M12 2c4.418 0 8 3.582 8 8c0 5.25 -8 12 -8 12s-8 -6.75 -8 -12c0 -4.418 3.582 -8 8 -8z" />
+            </svg>
+            View on Google Maps
+          </a>
+        `;
+        container.appendChild(card);
+      });
+    }
+
+    searchInput.addEventListener('input', () => {
+      renderTrips(searchInput.value);
+    });
+
+    renderTrips();
+  </script>
+</body>
+</html>

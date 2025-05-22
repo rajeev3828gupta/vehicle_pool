@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>View Ride Requests - StudentLink</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: linear-gradient(135deg, #111827, #1f2937);
+      margin: 0;
+      padding: 30px 20px;
+      min-height: 100vh;
+      color: #e5e7eb;
+      display: flex;
+      justify-content: center;
+    }
+
+    .container {
+      background: #1f2937;
+      border-radius: 15px;
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.6);
+      width: 700px;
+      max-width: 95vw;
+      padding: 30px 40px;
+      box-sizing: border-box;
+    }
+
+    h1 {
+      color: #60a5fa;
+      margin-bottom: 15px;
+      text-align: center;
+    }
+
+    .feature-image {
+      display: block;
+      margin: 0 auto 25px;
+      max-width: 250px;
+      border-radius: 15px;
+      box-shadow: 0 8px 20px rgba(96, 165, 250, 0.4);
+    }
+
+    .description {
+      text-align: center;
+      font-size: 1.1rem;
+      margin-bottom: 30px;
+      color: #d1d5db;
+    }
+
+    .filters {
+      display: flex;
+      gap: 15px;
+      margin-bottom: 25px;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+
+    select, input[type="time"] {
+      padding: 8px 12px;
+      font-size: 1rem;
+      border-radius: 8px;
+      border: 1px solid #4b5563;
+      background-color: #374151;
+      color: #f9fafb;
+      min-width: 140px;
+    }
+
+    .rides-list {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+
+    .ride-card {
+      display: flex;
+      gap: 15px;
+      padding: 15px 20px;
+      border-radius: 12px;
+      border-left: 6px solid #3b82f6;
+      background-color: #374151;
+      align-items: center;
+      animation: fadeIn 0.7s ease-in-out;
+    }
+
+    .ride-image {
+      width: 80px;
+      height: 80px;
+      border-radius: 12px;
+      object-fit: cover;
+      box-shadow: 0 4px 10px rgba(96, 165, 250, 0.4);
+      flex-shrink: 0;
+    }
+
+    .ride-info {
+      flex-grow: 1;
+    }
+
+    .ride-info h3 {
+      margin: 0 0 6px 0;
+      color: #93c5fd;
+    }
+
+    .ride-info p {
+      margin: 3px 0;
+      color: #e5e7eb;
+      font-size: 0.95rem;
+    }
+
+    .no-rides {
+      text-align: center;
+      color: #9ca3af;
+      font-style: italic;
+      margin-top: 40px;
+    }
+
+    .back-button {
+      margin-top: 25px;
+      background-color: #4b5563;
+      color: white;
+      border: none;
+      padding: 12px 20px;
+      font-weight: normal;
+      border-radius: 25px;
+      cursor: pointer;
+      display: block;
+      width: 150px;
+      margin-left: auto;
+      margin-right: auto;
+      transition: background-color 0.3s ease;
+    }
+
+    .back-button:hover {
+      background-color: #6b7280;
+    }
+
+    @keyframes fadeIn {
+      0% {
+        opacity: 0;
+        transform: translateY(15px);
+      }
+      100% {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <h1>View Ride Requests</h1>
+
+    <img class="feature-image" src="https://th.bing.com/th/id/OIP.49fCi_TcGtidyi4zhgLEXgHaE5?w=271&h=180&c=7&r=0&o=7&cb=iwp2&dpr=1.3&pid=1.7&rm=3" alt="People carpooling" />
+
+    <div class="description">
+      Browse ride requests from fellow students. Filter by location, time, or vehicle type to find a suitable ride.
+    </div>
+
+    <div class="filters">
+      <select id="locationFilter">
+        <option value="">Filter by Location</option>
+        <option value="IIT Delhi">IIT Delhi</option>
+        <option value="Connaught Place">Connaught Place</option>
+        <option value="Noida Sector 62">Noida Sector 62</option>
+        <option value="Saket">Saket</option>
+      </select>
+
+      <input type="time" id="timeFilter" />
+
+      <select id="vehicleFilter">
+        <option value="">Filter by Vehicle</option>
+        <option value="Car">Car</option>
+        <option value="Bike">Bike</option>
+        <option value="Bus">Bus</option>
+      </select>
+    </div>
+
+    <div class="rides-list" id="ridesList">
+     
+    </div>
+
+    <button class="back-button" onclick="goBack()">Back to Dashboard</button>
+  </div>
+
+  <script>
+    const rides = [
+      {
+        id: 1,
+        name: "Morning Ride to IIT Delhi",
+        location: "Noida Sector 62",
+        time: "08:00",
+        vehicle: "Car",
+        description: "Leaving from Noida Sector 62 to IIT Delhi at 8 AM. 3 seats available.",
+        image: "https://www.google.com/maps/d/thumbnail?mid=1ldSBixuiJXA5NUQQ3UPCw_IZuts"
+      },
+      {
+        id: 2,
+        name: "Evening Ride to Connaught Place",
+        location: "Saket",
+        time: "18:30",
+        vehicle: "Bike",
+        description: "Bike ride from Saket to Connaught Place after 6:30 PM classes.",
+        image: "https://www.google.com/maps/d/thumbnail?mid=1ldSBixuiJXA5NUQQ3UPCw_IZuts"
+      },
+      {
+        id: 3,
+        name: "Bus from IIT Delhi to Connaught",
+        location: "IIT Delhi",
+        time: "12:45",
+        vehicle: "Bus",
+        description: "Bus leaving IIT Delhi at 12:45 PM towards Connaught Place.",
+        image: "https://th.bing.com/th/id/OIP.BQnzNDxqIJZqGnbP7XbkuwHaHp?cb=iwp2&pid=ImgDet&w=184&h=189&c=7&dpr=1.3"
+      },
+      {
+        id: 4,
+        name: "Late Night Ride from Noida",
+        location: "Noida Sector 62",
+        time: "22:00",
+        vehicle: "Car",
+        description: "Carpool for late night journey from Noida, 2 seats available.",
+        image: "https://th.bing.com/th/id/OIP.YfwmXtkSBdUPnn65DCDHHwHaEU?cb=iwp2&pid=ImgDet&w=184&h=107&c=7&dpr=1.3"
+      },
+    ];
+
+    const locationFilter = document.getElementById('locationFilter');
+    const timeFilter = document.getElementById('timeFilter');
+    const vehicleFilter = document.getElementById('vehicleFilter');
+    const ridesList = document.getElementById('ridesList');
+
+    function renderRides() {
+      const locationVal = locationFilter.value;
+      const timeVal = timeFilter.value;
+      const vehicleVal = vehicleFilter.value;
+
+      const filteredRides = rides.filter(ride => {
+        const matchLocation = locationVal ? ride.location === locationVal : true;
+        const matchVehicle = vehicleVal ? ride.vehicle === vehicleVal : true;
+        const matchTime = timeVal ? ride.time >= timeVal : true;
+
+        return matchLocation && matchVehicle && matchTime;
+      });
+
+      ridesList.innerHTML = '';
+
+      if (filteredRides.length === 0) {
+        ridesList.innerHTML = '<div class="no-rides">No rides found matching your filters.</div>';
+        return;
+      }
+
+      filteredRides.forEach(ride => {
+        const card = document.createElement('div');
+        card.className = 'ride-card';
+
+        const img = document.createElement('img');
+        img.className = 'ride-image';
+        img.src = ride.image;
+        img.alt = ride.name;
+
+        const info = document.createElement('div');
+        info.className = 'ride-info';
+
+        const title = document.createElement('h3');
+        title.textContent = ride.name;
+
+        const desc = document.createElement('p');
+        desc.textContent = ride.description;
+
+        const details = document.createElement('p');
+        details.innerHTML = `<strong>Location:</strong> ${ride.location} &nbsp; | &nbsp; <strong>Time:</strong> ${ride.time} &nbsp; | &nbsp; <strong>Vehicle:</strong> ${ride.vehicle}`;
+
+        info.appendChild(title);
+        info.appendChild(desc);
+        info.appendChild(details);
+
+        card.appendChild(img);
+        card.appendChild(info);
+
+        ridesList.appendChild(card);
+      });
+    }
+
+    locationFilter.addEventListener('change', renderRides);
+    timeFilter.addEventListener('change', renderRides);
+    vehicleFilter.addEventListener('change', renderRides);
+
+    function goBack() {
+      window.history.back();
+    }
+
+    renderRides(); // Initial call
+  </script>
+</body>
+</html>

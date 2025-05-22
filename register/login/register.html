@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Campus Connect - Register/Login</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-image: url('https://wallpaperaccess.com/full/1179614.jpg'); 
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+      min-height: 100vh;
+      margin: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      backdrop-filter: brightness(0.5);
+    }
+
+ .form-container {
+  margin-top: 60px;
+  margin-bottom: 60px;
+  scroll-behavior: smooth;
+  background-color: rgba(82, 78, 78, 0.7); 
+  padding: 2rem;
+  border-radius: 1rem;
+  box-shadow: 0 10px 32px rgba(246, 245, 245, 0.4);
+  width: 100%;
+  max-width: 500px;
+  animation: fadeIn 1s ease-in-out;
+  backdrop-filter: blur(12px); 
+  -webkit-backdrop-filter: blur(12px);
+}
+
+
+
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .form-container h2 {
+      text-align: center;
+      color: #2563eb;
+      margin-bottom: 1.5rem;
+      font-size: xx-large;
+    }
+
+    .form-group {
+      margin-bottom: 1rem;
+    }
+
+    label {
+      display: block;
+      margin-bottom: 0.5rem;
+      color: #eceef1;
+    }
+
+    input, select, textarea {
+      width: 100%;
+      padding: 0.5rem;
+      border: 1px solid #d1d5db;
+      border-radius: 0.5rem;
+    }
+
+    button {
+      width: 100%;
+      padding: 0.75rem;
+      background-color: #2563eb;
+      color: white;
+      border: none;
+      border-radius: 0.5rem;
+      cursor: pointer;
+      font-weight: bold;
+      transition: background-color 0.3s ease;
+    }
+
+    button:hover {
+      background-color: #1d4ed8;
+    }
+
+    .toggle-link {
+      margin-top: 1rem;
+      text-align: center;
+      color: #2563eb;
+      cursor: pointer;
+      text-decoration: underline;
+    }
+
+    #profileSummary {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      background-color: rgba(0,0,0,0.8);
+      display: none;
+      justify-content: center;
+      align-items: center;
+      z-index: 1000;
+    }
+
+    #summaryCard {
+      background: white;
+      padding: 2rem;
+      border-radius: 1rem;
+      max-width: 500px;
+      width: 90%;
+      color: #111827;
+      animation: fadeIn 0.6s ease-in-out;
+    }
+
+    #summaryCard img {
+      max-width: 100px;
+      border-radius: 50%;
+      display: block;
+      margin: 0 auto 1rem;
+    }
+
+    #closeSummary {
+      margin-top: 1rem;
+      background-color: #ef4444;
+    }
+
+  </style>
+</head>
+<body>
+
+<div class="form-container" id="registerContainer">
+  <h2>Register for Campus Connect</h2>
+  <form id="registrationForm">
+    <div class="form-group">
+      <label for="name">Full Name</label>
+      <input type="text" id="name" required />
+    </div>
+    <div class="form-group">
+      <label for="email">Email</label>
+      <input type="email" id="email" required />
+    </div>
+    <div class="form-group">
+      <label for="collegeId">College ID</label>
+      <input type="text" id="collegeId" required />
+    </div>
+    <div class="form-group">
+      <label for="year">Year of Study</label>
+      <select id="year" required>
+        <option value="">Select Year</option>
+        <option value="1">1st Year</option>
+        <option value="2">2nd Year</option>
+        <option value="3">3rd Year</option>
+        <option value="4">4th Year</option>
+      </select>
+    </div>
+    <div class="form-group">
+      <label for="branch">Department</label>
+      <input type="text" id="branch" required />
+    </div>
+    <div class="form-group">
+      <label for="location">Home Location</label>
+      <input type="text" id="location" required />
+    </div>
+    <div class="form-group">
+      <label for="skills">Skills / Interests</label>
+      <textarea id="skills" rows="2"></textarea>
+    </div>
+    <div class="form-group">
+      <label for="projects">Project Areas</label>
+      <textarea id="projects" rows="2"></textarea>
+    </div>
+    <div class="form-group">
+      <label for="profilePic">Profile Picture (optional)</label>
+      <input type="file" id="profilePic" accept="image/*" />
+    </div>
+    <button type="submit">Register</button>
+  </form>
+  <div class="toggle-link" onclick="toggleForms()">Already have an account? Login here</div>
+</div>
+
+<div class="form-container" id="loginContainer" style="display:none">
+  <h2>Login to Campus Connect</h2>
+  <form id="loginForm">
+    <div class="form-group">
+      <label for="loginEmail">Email</label>
+      <input type="email" id="loginEmail" required />
+    </div>
+    <div class="form-group">
+      <label for="loginId">College ID</label>
+      <input type="text" id="loginId" required />
+    </div>
+    <button type="submit">Login</button>
+  </form>
+  <div class="toggle-link" onclick="toggleForms()">Don't have an account? Register here</div>
+</div>
+
+
+<div id="profileSummary">
+  <div id="summaryCard">
+    <div id="profileContent"></div>
+    <button id="closeSummary" onclick="document.getElementById('profileSummary').style.display='none'">Close</button>
+  </div>
+</div>
+
+<script>
+  function toggleForms() {
+    const regForm = document.getElementById('registerContainer');
+    const logForm = document.getElementById('loginContainer');
+    regForm.style.display = regForm.style.display === 'none' ? 'block' : 'none';
+    logForm.style.display = logForm.style.display === 'none' ? 'block' : 'none';
+  }
+
+  const registrationForm = document.getElementById('registrationForm');
+  registrationForm.addEventListener('submit', function(event) {
+    event.preventDefault();
+
+    const name = document.getElementById('name').value.trim();
+    const email = document.getElementById('email').value.trim();
+    const collegeId = document.getElementById('collegeId').value.trim();
+    const year = document.getElementById('year').value;
+    const branch = document.getElementById('branch').value.trim();
+    const location = document.getElementById('location').value.trim();
+    const skills = document.getElementById('skills').value.trim();
+    const projects = document.getElementById('projects').value.trim();
+    const picInput = document.getElementById('profilePic');
+    const picFile = picInput.files[0];
+
+    if (!name || !email || !collegeId || !year || !branch || !location) {
+      alert('Please fill in all required fields.');
+      return;
+    }
+
+    const reader = new FileReader();
+    reader.onload = function(e) {
+      const imgSrc = picFile ? e.target.result : '';
+
+      const profileHTML = `
+        ${imgSrc ? `<img src="${imgSrc}" alt="Profile Picture" />` : ''}
+        <h3>${name}</h3>
+        <p><strong>Email:</strong> ${email}</p>
+        <p><strong>College ID:</strong> ${collegeId}</p>
+        <p><strong>Year:</strong> ${year}</p>
+        <p><strong>Department:</strong> ${branch}</p>
+        <p><strong>Home Location:</strong> ${location}</p>
+        <p><strong>Skills/Interests:</strong> ${skills}</p>
+        <p><strong>Project Areas:</strong> ${projects}</p>
+      `;
+
+      document.getElementById('profileContent').innerHTML = profileHTML;
+      document.getElementById('profileSummary').style.display = 'flex';
+      registrationForm.reset();
+    };
+
+    if (picFile) {
+      reader.readAsDataURL(picFile);
+    } else {
+      reader.onload({ target: { result: '' } }); 
+    }
+  });
+
+  const loginForm = document.getElementById('loginForm');
+  loginForm.addEventListener('submit', function(event) {
+    event.preventDefault();
+    const email = document.getElementById('loginEmail').value.trim();
+    const collegeId = document.getElementById('loginId').value.trim();
+
+    if (!email || !collegeId) {
+      alert('Please enter both Email and College ID.');
+      return;
+    }
+
+   
+    loginForm.reset();
+    window.location.href = 'dashboard.html';
+  });
+</script>
+</body>
+</html>

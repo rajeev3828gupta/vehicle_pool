@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>StudentLink Dashboard</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: linear-gradient(135deg, #1e1e2f 0%, #121212 100%);
+      margin: 0;
+      padding-top: 60px;
+      color: #f0f0f0;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      height: 60px;
+      background: #111;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 20px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.7);
+      z-index: 1000;
+    }
+
+    nav .nav-left, nav .nav-right {
+      display: flex;
+      align-items: center;
+      gap: 15px;
+    }
+
+    nav button, nav a {
+      background: transparent;
+      border: none;
+      color: #fff;
+      font-size: 1rem;
+      cursor: pointer;
+      padding: 8px 12px;
+      border-radius: 6px;
+      font-weight: 600;
+      transition: background-color 0.3s;
+    }
+
+    nav button:hover, nav a:hover {
+      background-color: rgba(255,255,255,0.2);
+    }
+
+    header {
+      font-size: 2rem;
+      font-weight: 700;
+      text-align: center;
+      margin-bottom: 2rem;
+      margin-top: 1rem;
+      text-shadow: 0 2px 4px rgba(0,0,0,0.4);
+    }
+
+    .tabs {
+      display: flex;
+      justify-content: center;
+      gap: 1.5rem;
+      margin-bottom: 2rem;
+    }
+
+    .tabs button {
+      background: #222;
+      border: 1px solid #444;
+      color: #fff;
+      padding: 10px 20px;
+      border-radius: 10px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .tabs button:hover, .tabs button.active {
+      background-color: #2563eb;
+      color: #fff;
+    }
+
+    .stats {
+      display: flex;
+      gap: 2rem;
+      justify-content: center;
+      margin-bottom: 2rem;
+    }
+
+    .stat-box {
+      background: #1c1c2b;
+      border: 1px solid #333;
+      border-radius: 10px;
+      padding: 1rem 2rem;
+      text-align: center;
+      box-shadow: 0 6px 12px rgba(0, 0, 0, 0.5);
+      transition: transform 0.3s ease;
+    }
+
+    .stat-box:hover {
+      transform: translateY(-5px);
+    }
+
+    .stat-box h4 {
+      font-size: 1.2rem;
+      margin-bottom: 0.5rem;
+    }
+
+    .stat-box p {
+      font-size: 1.6rem;
+      font-weight: bold;
+      color: #4ade80;
+    }
+
+    main {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 1.5rem;
+      width: 90%;
+      max-width: 1000px;
+      margin-bottom: 3rem;
+    }
+
+    .card {
+      background: #232336;
+      color: #ddd;
+      border-radius: 15px;
+      padding: 1.5rem;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.5);
+      text-align: center;
+      transition: all 0.4s ease;
+      cursor: pointer;
+      animation: fadeInUp 0.8s ease forwards;
+      position: relative;
+      pointer-events: auto;
+    }
+
+    .card:hover {
+     transform: translateY(-10px) !important;  
+  box-shadow: 0 15px 30px rgba(0,0,0,0.6);
+    }
+
+    .card img {
+      width: 60px;
+      height: 60px;
+      margin-bottom: 15px;
+    }
+
+    .card h3 {
+      color: #60a5fa;
+      margin-bottom: 0.5rem;
+    }
+
+    @keyframes fadeInUp {
+      0% { opacity: 0; transform: translateY(20px); }
+      100% { opacity: 1; transform: translateY(0); }
+    }
+  </style>
+</head>
+<body>
+  <nav>
+    <div class="nav-left">
+      <button onclick="goBack()">← Back</button>
+    </div>
+    <div class="nav-right">
+      <a href="#">Profile</a>
+      <button onclick="logout()">Logout</button>
+    </div>
+  </nav>
+
+  <header>Welcome to StudentLink Dashboard</header>
+
+  <div class="tabs">
+    <button class="active">My Profile</button>
+    <button onclick="navigateTo('/register/login/dashboard-options/browse.html')">Browse Locations</button>
+    <button onclick="navigateTo('/register/login/dashboard-options/activity.html')">My Activities</button>
+  </div>
+
+  <div class="stats">
+    <div class="stat-box">
+      <h4>Connections</h4>
+      <p>12</p>
+    </div>
+    <div class="stat-box">
+      <h4>Skills Matched</h4>
+      <p>8</p>
+    </div>
+    <div class="stat-box">
+      <h4>Project Tags</h4>
+      <p>5</p>
+    </div>
+  </div>
+
+  <main>
+    <div class="card" onclick="navigateTo('/register/login/dashboard-options/ridepool.html')">
+      <img src="https://img.icons8.com/ios-filled/100/60a5fa/car.png" alt="Car" />
+      <h3>Create/Join Ride Pool</h3>
+      <p>Find or offer rides, pool vehicles, and save money.</p>
+    </div>
+
+    <div class="card" onclick="navigateTo('/register/login/dashboard-options/rides.html')">
+      <img src="https://img.icons8.com/ios-filled/100/60a5fa/road.png" alt="Road" />
+      <h3>View Ride Requests</h3>
+      <p>Browse available ride requests by filters.</p>
+    </div>
+
+    <div class="card" onclick="navigateTo('/register/login/dashboard-options/bills.html')">
+      <img src="https://img.icons8.com/ios-filled/100/60a5fa/bill.png" alt="Bill" />
+      <h3>Bill Splitting</h3>
+      <p>Manage and split expenses with peers.</p>
+    </div>
+
+    <div class="card" onclick="navigateTo('/register/login/dashboard-options/chat.html')">
+      <img src="https://img.icons8.com/ios-filled/100/60a5fa/chat.png" alt="Chat" />
+      <h3>Chat with Riders</h3>
+      <p>Coordinate rides with real-time chat.</p>
+    </div>
+
+    <div class="card" onclick="navigateTo('/register/login/dashboard-options/events.html')">
+      <img src="https://img.icons8.com/ios-filled/100/60a5fa/calendar.png" alt="Calendar" />
+      <h3>Events & Meetups</h3>
+      <p>Explore events and plan group meetups.</p>
+    </div>
+
+    <div class="card" onclick="navigateTo('/register/login/dashboard-options/help.html')">
+      <img src="https://img.icons8.com/ios-filled/100/60a5fa/help.png" alt="Help" />
+      <h3>Help & Support</h3>
+      <p>FAQs and support to assist you.</p>
+    </div>
+  </main>
+
+  <script>
+    function navigateTo(page) {
+      window.location.href = page;
+    }
+    function logout() {
+      alert("Logging out...");
+      window.location.href = 'register.html';
+    }
+    function goBack() {
+      window.location.href = 'register.html';
+    }
+  </script>
+</body>
+</html>
